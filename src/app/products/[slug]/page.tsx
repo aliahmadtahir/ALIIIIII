@@ -2,6 +2,7 @@ import { getProductsByCategory, Product } from '../../lib/api';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import ProductDetailModal from './ProductDetailModal';
+import Link from 'next/link';
 
 interface ProductDetailPageProps {
   params: { slug: string };
@@ -34,9 +35,9 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm">
       <div className="bg-white rounded-xl shadow-2xl flex flex-col md:flex-row w-full max-w-full md:max-w-5xl h-[90vh] md:h-[80vh] overflow-hidden relative mx-2 my-4 md:mx-auto md:my-0">
         {/* Close Button */}
-        <a href="/products" className="absolute -top-3 -right-3 z-20">
+        <Link href="/products" className="absolute -top-3 -right-3 z-20">
           <span className="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center rounded-full bg-black shadow-lg text-2xl md:text-3xl text-white font-bold hover:bg-gray-900 transition cursor-pointer select-none">&times;</span>
-        </a>
+        </Link>
         {/* Left: Image and Description */}
         <div className="w-full md:w-1/2 h-60 md:h-full flex flex-col justify-end relative bg-black">
           <Image

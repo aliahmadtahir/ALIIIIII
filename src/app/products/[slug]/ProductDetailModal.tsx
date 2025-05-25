@@ -47,7 +47,7 @@ export default function ProductDetailModal({ product, frequentlyBought }: Produc
           </div>
           {mealOpen && (
             <div className="mt-1 md:mt-2 mb-2 md:mb-3 divide-y">
-              {mealOptions.map((opt, idx) => (
+              {mealOptions.map((opt) => (
                 <label key={opt.name} className="flex items-center py-3 md:py-4 cursor-pointer text-sm md:text-base">
                   <input
                     type="radio"
