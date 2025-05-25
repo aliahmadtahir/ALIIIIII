@@ -1,103 +1,96 @@
-import Image from "next/image";
+// app/page.tsx
+import Image from 'next/image';
+import Link from 'next/link';
+import HomeSlider from './components/HomeSlider';
+import { getProductsByCategory } from './lib/api';
+import HomeFooter from './components/HomeFooter';
 
-export default function Home() {
+export default async function HomePage() {
+  // Fetch products grouped by category
+  const productsByCategory = await getProductsByCategory();
+
+  // Map of category name to imageUrl (first product in each category)
+  const categoryImages: Record<string, string> = {
+    BURGERS: productsByCategory['BURGERS']?.[0]?.imageUrl || '/burgers.webp',
+    'HOT DOGS': productsByCategory['HOT DOGS']?.[0]?.imageUrl || '/hot dogs.webp',
+    'LOADED FRIES': productsByCategory['LOADED FRIES']?.[0]?.imageUrl || '/loaded fries.webp',
+    BRIMWICH: productsByCategory['BRIMWICH']?.[0]?.imageUrl || '/brim which.webp',
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-white">
+      {/* Top Welcome Bar */}
+      <div className="bg-black text-white text-center py-1 text-sm font-normal">
+        Welcome to Brim Pakistan
+      </div>
+      {/* Main Nav Bar */}
+      <div className="flex flex-col sm:flex-row items-center justify-between px-2 sm:px-8 py-3 sm:py-4 bg-white shadow-sm gap-2 sm:gap-0">
+        {/* Logo */}
+        <div className="bg-black px-4 py-2 flex items-center justify-center mb-2 sm:mb-0" style={{ minWidth: 90, minHeight: 40 }}>
+          <span className="text-white font-extrabold text-2xl sm:text-4xl tracking-widest" style={{ letterSpacing: '0.1em' }}>BRIM</span>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        {/* Navigation Links */}
+        <nav className="flex flex-wrap items-center gap-4 sm:gap-8 justify-center">
+          <Link href="/" className="font-bold text-base sm:text-lg text-black hover:text-amber-600 transition">HOME</Link>
+          <Link href="/products" className="font-bold text-base sm:text-lg text-black hover:text-amber-600 transition">MENU</Link>
+          <Link href="#franchising" className="font-bold text-base sm:text-lg text-black hover:text-amber-600 transition">FRANCHISING</Link>
+          <Link href="#contact" className="font-bold text-base sm:text-lg text-black hover:text-amber-600 transition">CONTACT</Link>
+          <Link href="#join" className="font-bold text-base sm:text-lg text-black hover:text-amber-600 transition">JOIN US</Link>
+        </nav>
+      </div>
+      {/* Main Content - Add your home page images and content below */}
+      <HomeSlider />
+
+      {/* Hero Headings */}
+      <div className="text-center mt-10 sm:mt-16">
+        <h2 className="text-3xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-4 sm:mb-6 text-black">BEST BURGERS<br className="hidden sm:block" />IN PAKISTAN</h2>
+        <h3 className="text-lg sm:text-3xl font-extrabold tracking-wide mb-8 sm:mb-12 mt-4 sm:mt-8 text-black">OUR CATEGORIES</h3>
+      </div>
+
+      {/* Categories Grid */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8 px-2 sm:px-4 mb-10 sm:mb-20">
+        <CategoryCard name="BURGERS" img={categoryImages['BURGERS']} />
+        <CategoryCard name="HOT DOGS" img={categoryImages['HOT DOGS']} />
+        <CategoryCard name="LOADED FRIES" img={categoryImages['LOADED FRIES']} />
+        <CategoryCard name="BRIMWICH" img={categoryImages['BRIMWICH']} />
+        <CategoryCard name="BRIM JUNIOR" img="/brim jounier.webp" />
+        <CategoryCard name="NAKED BOX" img="/naked box.webp" />
+      </div>
+      {/* Banner image below the boxes */}
+      <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw]">
+        <Image src="/banner.webp" alt="BRIM Delivery Banner" width={1920} height={400} className="w-full h-auto max-h-[180px] sm:max-h-[300px] md:max-h-[400px] object-cover" priority />
+      </div>
+      {/* Additional banners: serve and app */}
+      <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw]">
+        <Image src="/serve.webp" alt="Serve Banner" width={1920} height={400} className="w-full h-auto max-h-[180px] sm:max-h-[300px] md:max-h-[400px] object-cover" priority />
+      </div>
+      <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw]">
+        <Image src="/app.webp" alt="App Banner" width={1920} height={400} className="w-full h-auto max-h-[180px] sm:max-h-[300px] md:max-h-[400px] object-cover" priority />
+      </div>
+
+      <HomeFooter />
     </div>
+  );
+}
+
+// CategoryCard component
+function CategoryCard({ name, img }: { name: string; img: string }) {
+  return (
+    <Link href="/products" className="block group rounded-lg border-2 border-gray-200 hover:border-black transition overflow-hidden bg-white">
+      <div className="aspect-square w-full bg-black flex items-center justify-center">
+        <Image
+          src={img}
+          alt={name}
+          width={400}
+          height={400}
+          className="object-cover w-full h-full"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          priority={name === 'BURGERS'}
+        />
+      </div>
+      <div className="py-2 sm:py-4 text-center">
+        <span className="text-lg sm:text-2xl font-extrabold tracking-wider text-black transition">{name}</span>
+      </div>
+    </Link>
   );
 }
