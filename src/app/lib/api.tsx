@@ -8,19 +8,6 @@ export interface Product {
   category: string;
 }
 
-// Define a type for the product item
-interface ProductItem {
-  id: number;
-  attributes: {
-    Name: string;
-    Description: string;
-    Price: number;
-    discountPrice?: number;
-    Category: string;
-    Image: { url: string };
-  };
-}
-
 export async function getProductsByCategory(): Promise<Record<string, Product[]>> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
@@ -42,7 +29,7 @@ export async function getProductsByCategory(): Promise<Record<string, Product[]>
 
     const { data } = await response.json();
 
-    const allProducts = data.map((item: any) => ({
+    const allProducts = (data as Array<{ id: number; Name: string; Description: string; Price: number; discountPrice?: number; category?: { Name: string }; Image?: { url: string } }>).map((item) => ({
       id: item.id,
       Name: item.Name,
       Description: item.Description,

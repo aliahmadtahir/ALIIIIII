@@ -1,4 +1,4 @@
-import { getProductsByCategory, Product } from '../../lib/api';
+import { getProductsByCategory } from '../../lib/api';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import ProductDetailModal from './ProductDetailModal';

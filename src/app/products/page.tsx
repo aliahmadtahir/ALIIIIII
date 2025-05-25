@@ -43,7 +43,7 @@ export default async function ProductsPage({
           {categoryNames.length === 0 ? (
             <div className="text-center py-8 sm:py-12">
               {searchTerm ? (
-                <h2 className="font-black text-xl sm:text-2xl">No products found for "{searchTerm}"</h2>
+                <h2 className="font-black text-xl sm:text-2xl">No products found for &quot;{searchTerm}&quot;</h2>
               ) : (
                 <>
                   <h2 className="font-black text-xl sm:text-2xl">No products available</h2>
