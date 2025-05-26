@@ -8,6 +8,17 @@ export interface Product {
   category: string;
 }
 
+// Define the expected shape of the Strapi product response
+interface StrapiProduct {
+  id: number;
+  Name: string;
+  Description: string;
+  Price: number;
+  discountPrice?: number;
+  Image?: { url: string };
+  category?: { Name: string };
+}
+
 export async function getProductsByCategory(): Promise<Record<string, Product[]>> {
   try {
     const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
@@ -29,7 +40,7 @@ export async function getProductsByCategory(): Promise<Record<string, Product[]>
 
     const { data } = await response.json();
 
-    const allProducts = (data as Array<any>).map((item) => ({
+    const allProducts = (data as StrapiProduct[]).map((item) => ({
       id: item.id,
       Name: item.Name,
       Description: item.Description,
