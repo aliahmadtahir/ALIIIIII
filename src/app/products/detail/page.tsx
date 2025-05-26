@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import ProductDetailModal from './ProductDetailModal';
+import ProductDetailModal from '../[slug]/ProductDetailModal';
 
 // Static product data
 const product = {
@@ -66,4 +66,4 @@ export default function ProductDetailPage() {
       </div>
     </div>
   );
-}
+} 

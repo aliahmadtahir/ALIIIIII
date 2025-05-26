@@ -11,10 +11,6 @@ interface ProductCardProps {
   imageUrl: string;
 }
 
-function slugify(str: string) {
-  return str.toLowerCase().replace(/\s+/g, '-');
-}
-
 export default function ProductCard({
   name,
   description,
@@ -24,7 +20,7 @@ export default function ProductCard({
   imageUrl,
 }: ProductCardProps) {
   return (
-    <Link href={`/products/${slugify(name)}`} className="block">
+    <Link href="/products/detail" className="block">
       <div className="flex flex-col sm:flex-row bg-white rounded-xl shadow p-2 sm:p-3 hover:shadow-lg transition max-w-full sm:max-w-5xl mx-auto cursor-pointer">
         {/* Image Section */}
         <div className="relative w-full sm:w-36 h-40 sm:h-40 flex-shrink-0 rounded-lg overflow-hidden mx-auto sm:mx-0">
