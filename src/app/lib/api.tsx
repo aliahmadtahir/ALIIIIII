@@ -10,11 +10,11 @@ export interface Product {
 
 export async function getProductsByCategory(): Promise<Record<string, Product[]>> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
-    if (!baseUrl) throw new Error("STRAPI_URL is not defined");
+    const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+    if (!API_URL) throw new Error("NEXT_PUBLIC_STRAPI_API_URL is not defined");
 
     // Add pagination with a large pageSize to get all products at once
-    const response = await fetch(`${baseUrl}/api/products?populate=*&pagination[pageSize]=100`, {
+    const response = await fetch(`${API_URL}/api/products?populate=*`, {
       cache: 'no-store',
       headers: {
         'Cache-Control': 'no-cache',
@@ -29,13 +29,13 @@ export async function getProductsByCategory(): Promise<Record<string, Product[]>
 
     const { data } = await response.json();
 
-    const allProducts = (data as Array<{ id: number; Name: string; Description: string; Price: number; discountPrice?: number; category?: { Name: string }; Image?: { url: string } }>).map((item) => ({
+    const allProducts = (data as Array<any>).map((item) => ({
       id: item.id,
       Name: item.Name,
       Description: item.Description,
       Price: item.Price,
       discountPrice: item.discountPrice,
-      imageUrl: item.Image?.url ? `${baseUrl}${item.Image.url}` : '',
+      imageUrl: item.Image?.url || '', // Use the absolute URL from Strapi if present
       category: item.category?.Name || 'Uncategorized',
     }));
 

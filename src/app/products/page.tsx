@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import ScrollToTop from "../components/ScrollToTop";
 import Footer from "../components/Footer";
 
+
 // Disable static page generation
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
