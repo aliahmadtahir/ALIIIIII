@@ -13,11 +13,10 @@ export const revalidate = 0;
 export default async function ProductsPage({
   searchParams,
 }: {
-  searchParams: { search?: string } | Promise<{ search?: string }>;
+  searchParams?: { search?: string };
 }) {
   const productsByCategory = await getProductsByCategory();
-  const resolvedSearchParams = await searchParams;
-  const searchTerm = resolvedSearchParams?.search?.toLowerCase() || '';
+  const searchTerm = searchParams?.search?.toLowerCase() || '';
 
   // Filter products based on search term
   const filteredProducts: Record<string, Product[]> = {};
