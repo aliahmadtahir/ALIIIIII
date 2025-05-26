@@ -4,12 +4,6 @@ import { notFound } from 'next/navigation';
 import ProductDetailModal from './ProductDetailModal';
 import Link from 'next/link';
 
-interface ProductDetailPageProps {
-  params: {
-    slug: string;
-  };
-}
-
 function slugify(str: string) {
   return str.toLowerCase().replace(/\s+/g, '-');
 }
@@ -24,7 +18,7 @@ const frequentlyBought = [
   { name: 'Oreo Shake', old: 875, price: 787.5 },
 ];
 
-export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
+export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
 
   const productsByCategory = await getProductsByCategory();
