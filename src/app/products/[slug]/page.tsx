@@ -4,6 +4,17 @@ import { notFound } from 'next/navigation';
 import ProductDetailModal from './ProductDetailModal';
 import Link from 'next/link';
 
+// Only export Product interface if needed elsewhere, otherwise keep it local
+export interface Product {
+  id: number;
+  Name: string;
+  Price: number;
+  Description: string;
+  discountPrice?: number;
+  imageUrl: string;
+  category: string;
+}
+
 function slugify(str: string) {
   return str.toLowerCase().replace(/\s+/g, '-');
 }
@@ -23,16 +34,18 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
 
   const productsByCategory = await getProductsByCategory();
   const allProducts = Object.values(productsByCategory).flat();
-  const product = allProducts.find(p => slugify(p.Name) === slug);
+  const product = allProducts.find((p) => slugify(p.Name) === slug);
 
-  if (!product) return notFound();
+  if (!product) {
+    return notFound();
+  }
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm">
       <div className="bg-white rounded-xl shadow-2xl flex flex-col md:flex-row w-full max-w-full md:max-w-5xl h-[90vh] md:h-[80vh] overflow-hidden relative mx-2 my-4 md:mx-auto md:my-0">
         <Link href="/products" className="absolute -top-3 -right-3 z-20">
           <span className="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center rounded-full bg-black shadow-lg text-2xl md:text-3xl text-white font-bold hover:bg-gray-900 transition cursor-pointer select-none">
-            &times;
+            ×
           </span>
         </Link>
 
