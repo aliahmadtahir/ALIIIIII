@@ -24,8 +24,7 @@ const frequentlyBought = [
 ];
 
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
+  const { slug } = params;
   const productsByCategory = await getProductsByCategory();
   const allProducts = Object.values(productsByCategory).flat();
   const product = allProducts.find(p => slugify(p.Name) === slug);
