@@ -48,11 +48,13 @@ export default function ProductDetailPage() {
         <div className="w-full md:w-1/2 h-60 md:h-full flex flex-col justify-end relative bg-black">
           <Image
             src={randomImage}
-            alt={product.Name}
+            alt={`Product image of ${product.Name}`}
             fill
             className="object-cover object-center"
             style={{ zIndex: 1 }}
             sizes="(max-width: 768px) 100vw, 50vw"
+            priority
+            loading="eager"
           />
           <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 to-black/0 p-4 md:p-6 z-10">
             <h2 className="text-xl md:text-3xl font-bold text-white mb-2">{product.Name}</h2>

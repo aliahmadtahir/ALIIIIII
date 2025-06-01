@@ -1,26 +1,47 @@
+"use client";
+
 import Image from "next/image";
 import { Heart } from "lucide-react";
 import Link from "next/link";
+import { useProduct } from "../context/ProductContext";
 
 interface ProductCardProps {
+  id: number;
   name: string;
   description: string;
   price: number;
   discountPrice?: number;
   discountPercent?: number;
   imageUrl: string;
+  category: string;
 }
 
 export default function ProductCard({
+  id,
   name,
   description,
   price,
   discountPrice,
   discountPercent,
   imageUrl,
+  category,
 }: ProductCardProps) {
+  const { setSelectedProduct } = useProduct();
+
+  const handleClick = () => {
+    setSelectedProduct({
+      id,
+      Name: name,
+      Price: price,
+      Description: description,
+      discountPrice,
+      imageUrl,
+      category,
+    });
+  };
+
   return (
-    <Link href="/products/detail" className="block">
+    <Link href="/products/detail" onClick={handleClick} className="block">
       <div className="flex flex-col sm:flex-row bg-white rounded-xl shadow p-2 sm:p-3 hover:shadow-lg transition max-w-full sm:max-w-5xl mx-auto cursor-pointer">
         {/* Image Section */}
         <div className="relative w-full sm:w-36 h-40 sm:h-40 flex-shrink-0 rounded-lg overflow-hidden mx-auto sm:mx-0">
@@ -31,11 +52,12 @@ export default function ProductCard({
           )}
           <Image
             src={imageUrl}
-            alt={name}
+            alt={`Product image of ${name}`}
             width={144}
             height={144}
             className="object-cover w-full h-full"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            loading="lazy"
           />
         </div>
 

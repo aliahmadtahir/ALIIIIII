@@ -24,15 +24,9 @@ export async function getProductsByCategory(): Promise<Record<string, Product[]>
     const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
     if (!API_URL) throw new Error("NEXT_PUBLIC_STRAPI_API_URL is not defined");
 
-    // Add pagination with a large pageSize to get all products at once
     const response = await fetch(`${API_URL}/api/products?populate=*`, {
-      cache: 'no-store',
-      headers: {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache'
-      },
       next: {
-        revalidate: 0
+        revalidate: 60 // Cache for 60 seconds
       }
     });
     
